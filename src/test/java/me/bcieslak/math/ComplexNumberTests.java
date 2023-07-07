@@ -206,8 +206,7 @@ public class ComplexNumberTests
             final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(2.323243234232433213524D, -8.91421356787696734416214D);
             final ComplexNumber EXPECTED_RESULT = new ComplexNumber(2.3232432342D, -8.9142135679D);
             final int ROUND_LEVEL = 15;
-            COMPLEX_NUMBER.setRoundLevel(ROUND_LEVEL);
-            final ComplexNumber RESULT = ComplexNumber.roundComplexNumber(COMPLEX_NUMBER, COMPLEX_NUMBER.getRoundLevel());
+            final ComplexNumber RESULT = ComplexNumber.roundComplexNumber(COMPLEX_NUMBER, ROUND_LEVEL);
             assertEquals(EXPECTED_RESULT, RESULT);
         };
 
@@ -219,8 +218,7 @@ public class ComplexNumberTests
             final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(11.3487623497D, -14.8247732649D);
             final ComplexNumber EXPECTED_RESULT = new ComplexNumber(11.0D, -15.0D);
             final int ROUND_LEVEL = -2321;
-            COMPLEX_NUMBER.setRoundLevel(ROUND_LEVEL);
-            final ComplexNumber RESULT = ComplexNumber.roundComplexNumber(COMPLEX_NUMBER, COMPLEX_NUMBER.getRoundLevel());
+            final ComplexNumber RESULT = ComplexNumber.roundComplexNumber(COMPLEX_NUMBER, ROUND_LEVEL);
             assertEquals(EXPECTED_RESULT, RESULT);
         };
 
@@ -607,5 +605,479 @@ public class ComplexNumberTests
 
 
         return TESTS;
+    }
+
+    @TestFactory
+    @DisplayName("Sum method should throw exception")
+    List<DynamicTest> sumMethodShouldThrowException()
+    {
+        final LinkedList<DynamicTest> TESTS = new LinkedList<>();
+
+
+        Executable test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = null;
+            assertThrows(NullPointerException.class, () -> ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS));
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Sum method should throw NullPointerException", test));
+
+
+        test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber());
+            LIST_OF_COMPLEX_NUMBERS.addLast(null);
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber());
+            assertThrows(NullPointerException.class, () -> ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS));
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Sum method should throw NullPointerException", test));
+
+
+        test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+            assertThrows(IllegalArgumentException.class, () -> ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS));
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Sum method should throw IllegalArgumentException", test));
+
+
+        return TESTS;
+    }
+
+    @Test
+    @DisplayName("Sum method should not throw exception")
+    void sumMethodShouldNotThrowException()
+    {
+        final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+        LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber());
+        LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber());
+        assertDoesNotThrow(() -> ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS));
+    }
+
+    @TestFactory
+    @DisplayName("Method sum(List<ComplexNumber> listOfComplexNumbers) should return new object with sum of complex numbers")
+    public List<DynamicTest> methodShouldReturnNewObjectWithSumOfComplexNumbers()
+    {
+        final LinkedList<DynamicTest> TESTS = new LinkedList<>();
+
+
+        Executable test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(1.0D, 1.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(3.0D, 5.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-7.0D, 12.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(10.0D, -4.0D));
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(7.0D, 14.0D);
+            final ComplexNumber RESULT = ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (5.0+14.0j)", test));
+
+
+        test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(13.0D, -8.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-7.0D, 4.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(2.0D, -12.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-12.0D, 10.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(3.0D, 7.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-7.0D, 1.0D));
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-8.0D, 2.0D);
+            final ComplexNumber RESULT = ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-8.0+2.0j)", test));
+
+
+        test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(6.0D, -4.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(8.0D, 12.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-10.0D, -7.0D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-4.0D, -1.0D));
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(0.0D, 0.0D);
+            final ComplexNumber RESULT = ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (0.0+0.0j)", test));
+
+
+        test = () ->
+        {
+            final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(2.5D, -8.3D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(-1.25D, 2.7D));
+            LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber(3.0D, 1.1D));
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(4.25D, -4.5D);
+            final ComplexNumber RESULT = ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (4.25-4.5j)", test));
+
+
+        return TESTS;
+    }
+
+    @Test
+    @DisplayName("Negation method should throw NullPointerException")
+    void negationMethodShouldThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = null;
+            ComplexNumber.negation(COMPLEX_NUMBER);
+        };
+
+        assertThrows(NullPointerException.class, TEST);
+    }
+
+    @Test
+    @DisplayName("Method should not throw exception")
+    void negationMethodShouldNotThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(3.0D, -2.2D);
+            ComplexNumber.negation(COMPLEX_NUMBER);
+        };
+
+        assertDoesNotThrow(TEST);
+    }
+
+    @TestFactory
+    @DisplayName("Method should return negation of complex number")
+    public List<DynamicTest> methodShouldReturnNegationOfComplexNumber()
+    {
+        final LinkedList<DynamicTest> TESTS = new LinkedList<>();
+
+
+        Executable test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(3.0D, 1.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-3.0D, -1.0D);
+            final ComplexNumber RESULT = ComplexNumber.negation(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-3.0-1.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-8.0D, -2.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(8.0D, 2.0D);
+            final ComplexNumber RESULT = ComplexNumber.negation(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-8.0-2.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-2.5D, 4.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(2.5D, -4.0D);
+            final ComplexNumber RESULT = ComplexNumber.negation(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (2.5-4.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(2.5D, -4.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-2.5D, 4.0D);
+            final ComplexNumber RESULT = ComplexNumber.negation(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-2.5+4.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(3.0D);
+            final ComplexNumber EXPECTED_NUMBER = new ComplexNumber(-3.0D, 0.0D);
+            final ComplexNumber RESULT = ComplexNumber.negation(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_NUMBER, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-3.0+0.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber();
+            final ComplexNumber EXPECTED_NUMBER = new ComplexNumber(0.0D, 0.0D);
+            final ComplexNumber RESULT = ComplexNumber.negation(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_NUMBER, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (0.0+0.0j)", test));
+
+
+        return TESTS;
+    }
+
+    @Test
+    @DisplayName("Conjugate method should throw NullPointerException")
+    void conjugateMethodShouldThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = null;
+            ComplexNumber.conjugate(COMPLEX_NUMBER);
+        };
+
+        assertThrows(NullPointerException.class, TEST);
+    }
+
+    @Test
+    @DisplayName("Conjugate method should not throw exception")
+    void conjugateMethodShouldNotThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-12.3D, 9.72D);
+            ComplexNumber.conjugate(COMPLEX_NUMBER);
+        };
+
+        assertDoesNotThrow(TEST);
+    }
+
+    @TestFactory
+    @DisplayName("Method should return conjugate of complex number")
+    public List<DynamicTest> methodShouldReturnConjugateOfComplexNumber()
+    {
+        final LinkedList<DynamicTest> TESTS = new LinkedList<>();
+
+
+        Executable test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(1.0D, 3.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(1.0D, -3.0D);
+            final ComplexNumber RESULT = ComplexNumber.conjugate(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (1.0-3.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(1.0D, -3.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(1.0D, 3.0D);
+            final ComplexNumber RESULT = ComplexNumber.conjugate(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (1.0+3.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-6.0D, 2.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-6.0D, -2.0D);
+            final ComplexNumber RESULT = ComplexNumber.conjugate(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-6.0-2.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-6.0D, -2.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-6.0D, 2.0D);
+            final ComplexNumber RESULT = ComplexNumber.conjugate(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-6.0+2.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-6.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-6.0D, 0.0D);
+            final ComplexNumber RESULT = ComplexNumber.conjugate(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (-6.0+0.0j)", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber();
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(0.0D, 0.0D);
+            final ComplexNumber RESULT = ComplexNumber.conjugate(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return (0.0+0.0j)", test));
+
+
+        return TESTS;
+    }
+
+    @Test
+    @DisplayName("Modulus method should throw NullPointerException")
+    void modulusMethodShouldThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = null;
+            ComplexNumber.modulus(COMPLEX_NUMBER);
+        };
+
+        assertThrows(NullPointerException.class, TEST);
+    }
+
+    @Test
+    @DisplayName("Modulus method should not throw exception")
+    void modulusMethodShouldNotThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            ComplexNumber complexNumber = new ComplexNumber(3.12D, -89.7D);
+            ComplexNumber.modulus(complexNumber);
+        };
+
+        assertDoesNotThrow(TEST);
+    }
+
+    @TestFactory
+    @DisplayName("Method should return modulus of complex number")
+    public List<DynamicTest> methodShouldReturnModulusOfComplexNumber()
+    {
+        final LinkedList<DynamicTest> TESTS = new LinkedList<>();
+
+
+        Executable test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(3.0D, -4.0D);
+            final double EXPECTED_RESULT = 5.0D;
+            final double RESULT = ComplexNumber.modulus(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return 5.0", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-3.0D, -4.0D);
+            final double EXPECTED_RESULT = 5.0D;
+            final double RESULT = ComplexNumber.modulus(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return 5.0", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(0.0D, 0.0D);
+            final double EXPECTED_RESULT = 0.0D;
+            final double RESULT = ComplexNumber.modulus(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TESTS.addLast(DynamicTest.dynamicTest("Method should return 0.0", test));
+
+
+        return TESTS;
+    }
+
+    @Test
+    @DisplayName("Exponential method should throw NullPointerException")
+    void exponentialMethodShouldThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = null;
+            ComplexNumber.exponential(COMPLEX_NUMBER);
+        };
+
+        assertThrows(NullPointerException.class, TEST);
+    }
+
+    @Test
+    @DisplayName("Exponential method should not throw NullPointerException")
+    void exponentialMethodShouldNotThrowException()
+    {
+        final Executable TEST = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(3.74D, 12.3D);
+            ComplexNumber.exponential(COMPLEX_NUMBER);
+        };
+
+        assertDoesNotThrow(TEST);
+    }
+
+    @TestFactory
+    @DisplayName("Method should return exponential of complex number")
+    public List<DynamicTest> methodShouldReturnExponential()
+    {
+        final LinkedList<DynamicTest> TEST = new LinkedList<>();
+
+
+        Executable test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(2.0D, 3.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-7.3151100949D, 1.0427436562D);
+            final ComplexNumber RESULT = ComplexNumber.exponential(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TEST.addLast(DynamicTest.dynamicTest("Method should return exponential of complex number", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(4.0D, -3.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-54.0517588611D, -7.7048913727D);
+            final ComplexNumber RESULT = ComplexNumber.exponential(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TEST.addLast(DynamicTest.dynamicTest("Method should return exponential of complex number", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-5.0D, 2.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(-0.0028039753D, 0.0061267979D);
+            final ComplexNumber RESULT = ComplexNumber.exponential(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TEST.addLast(DynamicTest.dynamicTest("Method should return exponential of complex number", test));
+
+
+        test = () ->
+        {
+            final ComplexNumber COMPLEX_NUMBER = new ComplexNumber(-2.0D, -7.0D);
+            final ComplexNumber EXPECTED_RESULT = new ComplexNumber(0.1020295751D, -0.0889134674D);
+            final ComplexNumber RESULT = ComplexNumber.exponential(COMPLEX_NUMBER);
+            assertEquals(EXPECTED_RESULT, RESULT);
+        };
+
+        TEST.addLast(DynamicTest.dynamicTest("Method should return exponential of complex number", test));
+
+
+        return TEST;
     }
 }
