@@ -1,4 +1,4 @@
-package me.bcieslak.math;
+package pl.cieslak.bartosz.math;
 
 import java.io.Serializable;
 import java.util.List;

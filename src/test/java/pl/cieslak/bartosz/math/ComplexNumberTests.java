@@ -1,9 +1,6 @@
-package me.bcieslak.math;
+package pl.cieslak.bartosz.math;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.LinkedList;
@@ -126,7 +123,7 @@ public class ComplexNumberTests
     void roundingMethodShouldNotThrowException()
     {
         final ComplexNumber COMPLEX_NUMBER = new ComplexNumber();
-        assertDoesNotThrow(() -> ComplexNumber.roundComplexNumber(COMPLEX_NUMBER, 0));
+        Assertions.assertDoesNotThrow(() -> ComplexNumber.roundComplexNumber(COMPLEX_NUMBER, 0));
     }
 
     @TestFactory
@@ -534,7 +531,7 @@ public class ComplexNumberTests
     {
         final ComplexNumber FIRST_COMPLEX_NUMBER = new ComplexNumber(10.0D, 1.0D);
         final ComplexNumber SECOND_COMPLEX_NUMBER = new ComplexNumber(1.0D, 1.0D);
-        assertDoesNotThrow(() -> FIRST_COMPLEX_NUMBER.divide(SECOND_COMPLEX_NUMBER));
+        Assertions.assertDoesNotThrow(() -> FIRST_COMPLEX_NUMBER.divide(SECOND_COMPLEX_NUMBER));
     }
 
     @TestFactory
@@ -654,7 +651,7 @@ public class ComplexNumberTests
         final LinkedList<ComplexNumber> LIST_OF_COMPLEX_NUMBERS = new LinkedList<>();
         LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber());
         LIST_OF_COMPLEX_NUMBERS.addLast(new ComplexNumber());
-        assertDoesNotThrow(() -> ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS));
+        Assertions.assertDoesNotThrow(() -> ComplexNumber.sum(LIST_OF_COMPLEX_NUMBERS));
     }
 
     @TestFactory
